@@ -395,9 +395,9 @@ val testAdmobInterstitialUnitId = "ca-app-pub-9365110263820080~5918451710"
 // The real ids are baked in as the release defaults (AdMob ids are not secret — they ship inside every APK),
 // and stay overridable so a fork can point ads at its own AdMob account instead of the upstream one.
 val realAdmobAppId = (findProperty("ADMOB_APP_ID") as String?) ?: System.getenv("ADMOB_APP_ID")
-    ?: "ca-app-pub-9365110263820080/4414546783"
-val realAdmobNativeUnitId = (findProperty("ADMOB_NATIVE_UNIT_ID") as String?) ?: System.getenv("ADMOB_NATIVE_UNIT_ID")
     ?: "ca-app-pub-9365110263820080~5918451710"
+val realAdmobNativeUnitId = (findProperty("ADMOB_NATIVE_UNIT_ID") as String?) ?: System.getenv("ADMOB_NATIVE_UNIT_ID")
+    ?: "ca-app-pub-9365110263820080/9591861003"
 // The real interstitial unit (full-screen "long build" ad). Baked in as the release default like the other
 // ids (AdMob ids aren't secret — they ship in every APK), overridable via -PADMOB_INTERSTITIAL_UNIT_ID or the
 // ADMOB_INTERSTITIAL_UNIT_ID env var so a fork can point at its own AdMob account.
