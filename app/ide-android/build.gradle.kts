@@ -440,7 +440,7 @@ android {
         val supabaseUrl = (findProperty("SUPABASE_URL") as String?) ?: System.getenv("SUPABASE_URL")
             ?: "https://xaeygtdjngzudkgcbkuh.supabase.co"
         val supabaseKey = (findProperty("SUPABASE_KEY") as String?) ?: System.getenv("SUPABASE_KEY")
-            ?: "sb_publishable_5T14bUAG6fOGz47kwYzG7A_25dj3ap4"
+            ?: "sb_publishable_R56t7zojn7lOIpNb7v4JpQ_V-EGA5_Z"
         buildConfigField("String", "SUPABASE_URL", "\"$supabaseUrl\"")
         buildConfigField("String", "SUPABASE_KEY", "\"$supabaseKey\"")
 
