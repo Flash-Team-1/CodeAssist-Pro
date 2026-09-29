@@ -41,19 +41,19 @@ object BetaInfo {
     const val LABEL: String = "Beta"
 
     /** Where "Submit suggestions" sends the user (opened via FileActions.openUrl). */
-    const val FEEDBACK_URL: String = "https://github.com/narutoooo-dev/CodeAssist-Pro/issues/new"
+    const val FEEDBACK_URL: String = "https://github.com/Flash-Team-1/CodeAssist-Pro/issues/new"
 
     /** What "Learn more" on the analytics consent prompt opens: the privacy policy. */
-    const val PRIVACY_URL: String = "https://github.com/narutoooo-dev/CodeAssist-Pro/blob/main/PRIVACY.md"
+    const val PRIVACY_URL: String = "https://github.com/Flash-Team-1/CodeAssist-Pro/blob/main/PRIVACY.md"
 
     /** The Discord community invite (opened via FileActions.openUrl from the Projects screen). */
-    const val DISCORD_URL: String = "https://discord.gg/y2gycT6pDW"
+    const val DISCORD_URL: String = "https://discord.gg/xmzzbNRXZd"
 
     /** Where the "Sponsor" action sends the user (the GitHub Sponsors page). */
-    const val SPONSOR_URL: String = "https://github.com/sponsors/narutoooo-dev"
+    const val SPONSOR_URL: String = "https://github.com/sponsors/Flash-Team-1"
 
     /** The GitHub repository the "Star on GitHub" action opens. */
-    const val REPO_URL: String = "https://github.com/narutoooo-dev/CodeAssist-Pro"
+    const val REPO_URL: String = "https://github.com/Flash-Team-1/CodeAssist-Pro"
 }
 
 /**
