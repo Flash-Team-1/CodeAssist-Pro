@@ -155,7 +155,7 @@ fun SettingsScreen(
             if (page.id != PRIVACY_PAGE_ID) page
             else {
                 val injected = buildList {
-                    add(UiSettingControl.Toggle(SHOW_ADS_KEY, showAdsTitle, showAdsDesc, ads.adsEnabled))
+                    //add(UiSettingControl.Toggle(SHOW_ADS_KEY, showAdsTitle, showAdsDesc, ads.adsEnabled)) //Ads not closed
                     // Only shown where the host's consent flow requires a privacy-options entry point (EEA/UK).
                     if (privacyOptionsRequired) {
                         add(UiSettingControl.Action(AD_PRIVACY_KEY, adPrivacyTitle, adPrivacyDesc, buttonLabel = adPrivacyButton))
