@@ -24,25 +24,21 @@ private const val LESSON_INTERSTITIAL_EVERY = 2
  * separate donation link. Instances are created once in [dev.ide.ui.CodeAssistApp] and provided through
  * [LocalAds]; screens read the controller via [rememberAds] rather than threading it through every parameter.
  *
- * NOTE: The user-facing "show ads" toggle has been removed. Ads are now always enabled whenever the host
- * has an ad network. See [manageable] and [updateAdsEnabled].
+ * The preference survives every app launch but NOT an install or update: a build whose [AdHost.installStamp]
+ * differs from the one the stored value belongs to starts with ads back on (see [initialAdsEnabled]).
  */
 class AdController(
     private val backend: IdeBackend,
     val host: AdHost,
 ) {
-    /** Always true — ads are no longer user-toggleable. */
-    var adsEnabled by mutableStateOf(true)
+    var adsEnabled by mutableStateOf(initialAdsEnabled(backend, host))
         private set
 
-    /** Ads render only when the host has an ad network. */
+    /** Ads render only when the host has an ad network AND the user hasn't turned them off. */
     val adsActive: Boolean get() = host.available && adsEnabled
 
-    /**
-     * Whether to show the ad on/off control. Always false — the toggle has been removed from Settings,
-     * so no UI surface should present it.
-     */
-    val manageable: Boolean get() = false
+    /** Whether to show the ad on/off control (only where an ad network exists — i.e. Android, not desktop). */
+    val manageable: Boolean get() = host.available
 
     /**
      * Whether to surface a persistent "Manage ad consent" entry (UMP privacy options, EEA/UK). Reads the host's
@@ -53,13 +49,10 @@ class AdController(
     /** Open the host's ad consent / privacy-options form. Call only when [privacyOptionsRequired]. */
     fun showPrivacyOptions() = host.showPrivacyOptions()
 
-    /**
-     * No-op. Ads can no longer be turned off from the UI; kept for source compatibility with any
-     * existing call site that toggled the preference.
-     */
-    @Suppress("UNUSED_PARAMETER")
+    /** Turn ads on/off for free and persist the choice. */
     fun updateAdsEnabled(enabled: Boolean) {
-        // Intentionally does nothing: ads are always enabled.
+        adsEnabled = enabled
+        backend.settings.setPreference(ADS_ENABLED_PREF, enabled.toString())
     }
 
     /** Count of eligible (ads-active) lesson finishes so far this session — drives the every-Nth gate below. */
@@ -75,6 +68,24 @@ class AdController(
         lessonFinishes++
         return lessonFinishes % LESSON_INTERSTITIAL_EVERY == 0
     }
+}
+
+/**
+ * The ads-enabled value a freshly created [AdController] starts from, resetting it to on once per installed
+ * build. Ads being free to turn off only works if each update gets to ask again, so a stored "off" choice is
+ * kept for as long as the app keeps the same [AdHost.installStamp] (every launch of one installation) and
+ * dropped when that stamp changes (a fresh install or an update). The new stamp is recorded at the same time,
+ * so the reset happens once and the user's next choice sticks until the next update. Hosts that can't identify
+ * the build (a null stamp — desktop) never reset.
+ */
+private fun initialAdsEnabled(backend: IdeBackend, host: AdHost): Boolean {
+    val stamp = host.installStamp
+    if (stamp != null && backend.settings.preference(ADS_ENABLED_STAMP_PREF) != stamp) {
+        backend.settings.setPreference(ADS_ENABLED_PREF, true.toString())
+        backend.settings.setPreference(ADS_ENABLED_STAMP_PREF, stamp)
+        return true
+    }
+    return backend.settings.preference(ADS_ENABLED_PREF)?.toBooleanStrictOrNull() ?: true
 }
 
 /**
