@@ -388,10 +388,10 @@ val bundleComposeDrawablesAsset = tasks.register<Copy>("bundleComposeDrawablesAs
 // back to the test ids so a fork builds fine with AdMob unconfigured. The App id reaches the manifest through
 // the `admobAppId` placeholder; the native ad-unit id is a BuildConfig field AndroidAdHost reads. One native
 // ad unit is reused across all four placements. OFFICIAL RELEASES MUST SET BOTH real ids.
-val testAdmobAppId = "ca-app-pub-3940256099942544~3347511713"
-val testAdmobNativeUnitId = "ca-app-pub-3940256099942544/2247696110"
+val testAdmobAppId = "ca-app-pub-9365110263820080~5918451710"
+val testAdmobNativeUnitId = "ca-app-pub-9365110263820080/4414546783"
 // Google's TEST interstitial unit — the full-screen "long build" ad (AndroidAdHost.showBuildInterstitial).
-val testAdmobInterstitialUnitId = "ca-app-pub-3940256099942544/1033173712"
+val testAdmobInterstitialUnitId = "ca-app-pub-9365110263820080~5918451710"
 // The real ids are baked in as the release defaults (AdMob ids are not secret — they ship inside every APK),
 // and stay overridable so a fork can point ads at its own AdMob account instead of the upstream one.
 val realAdmobAppId = (findProperty("ADMOB_APP_ID") as String?) ?: System.getenv("ADMOB_APP_ID")
